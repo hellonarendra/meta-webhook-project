@@ -83,6 +83,10 @@ app.post('/webhook', (req, res) => {
                 handlePostback(senderPsid, webhookEvent.postback);
             }
         });
+        axios({
+            method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+            url: `https://graph.facebook.com/v17.0/${process.env.PAGE_ID}/messages?recipient={id:${senderPsid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${process.env.PAGE_ACCESS_TOKEN}`,
+        });
 
         // Returns a '200 OK' response to all requests
         res.status(200).send('EVENT_RECEIVED');
