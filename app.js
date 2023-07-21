@@ -60,7 +60,7 @@ app.get('/webhook', (req, res) => {
 
 // Creates the endpoint for your webhook
 app.post('/webhook', (req, res) => {
-    let senderPsid;
+    // let senderPsid;
     console.log("webhook post API call:");
     let body = req.body;
     console.log("body from post API call: ", body);
@@ -76,7 +76,7 @@ app.post('/webhook', (req, res) => {
             console.log(webhookEvent);
 
             // Get the sender PSID
-            senderPsid = webhookEvent.sender.id;
+            let senderPsid = webhookEvent.sender.id;
             console.log('Sender PSID: ' + senderPsid);
 
             // Check if the event is a message or postback and
@@ -87,10 +87,7 @@ app.post('/webhook', (req, res) => {
                 handlePostback(senderPsid, webhookEvent.postback);
             }
         });
-        axios({
-            method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-            url: `https://graph.facebook.com/v17.0/${process.env.PAGE_ID}/messages?recipient={id:${senderPsid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${process.env.PAGE_ACCESS_TOKEN}`,
-        });
+
 
         // Returns a '200 OK' response to all requests
         res.status(200).send('EVENT_RECEIVED');
@@ -195,6 +192,11 @@ function callSendAPI(senderPsid, response) {
 
 function handleMessage(sender_psid, received_message) {
     console.log("Handle Message function call");
+    axios({
+        method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+        url: `https://graph.facebook.com/v17.0/${process.env.PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${process.env.PAGE_ACCESS_TOKEN}`,
+    });
+
 }
 
 // Handles messaging_postbacks events
