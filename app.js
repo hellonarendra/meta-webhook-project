@@ -56,8 +56,11 @@ app.get('/webhook', (req, res) => {
     }
 });
 
+
+
 // Creates the endpoint for your webhook
 app.post('/webhook', (req, res) => {
+    let senderPsid;
     console.log("webhook post API call:");
     let body = req.body;
     console.log("body from post API call: ", body);
@@ -65,6 +68,7 @@ app.post('/webhook', (req, res) => {
     if (body.object === 'page') {
 
         // Iterates over each entry - there may be multiple if batched
+
         body.entry.forEach(function (entry) {
 
             // Gets the body of the webhook event
@@ -72,7 +76,7 @@ app.post('/webhook', (req, res) => {
             console.log(webhookEvent);
 
             // Get the sender PSID
-            let senderPsid = webhookEvent.sender.id;
+            senderPsid = webhookEvent.sender.id;
             console.log('Sender PSID: ' + senderPsid);
 
             // Check if the event is a message or postback and
