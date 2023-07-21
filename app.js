@@ -196,7 +196,6 @@ function handleMessage(sender_psid, received_message) {
         method: "POST", // Required, HTTP method, a string, e.g. POST, GET
         url: `https://graph.facebook.com/v17.0/${process.env.PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${process.env.PAGE_ACCESS_TOKEN}`,
     });
-
 }
 
 // Handles messaging_postbacks events
