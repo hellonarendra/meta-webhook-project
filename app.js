@@ -86,7 +86,8 @@ app.post('/webhook', (req, res) => {
             } else if (webhookEvent.postback) {
                 handlePostback(senderPsid, webhookEvent.postback);
             }
-        });
+        }
+        );
 
 
         // Returns a '200 OK' response to all requests
@@ -204,7 +205,9 @@ async function handleMessage(sender_psid, received_message) {
     //     url: `https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${process.env.PAGE_ACCESS_TOKEN}`,
     // });
     try {
-        await axios.post(`https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${PAGE_ACCESS_TOKEN}`);
+        const response = await axios.post(`https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${PAGE_ACCESS_TOKEN}`)
+        console.log("Response is : ", response)
+        return response;
     } catch (err) {
         console.log("Error is : ", err);
     }
