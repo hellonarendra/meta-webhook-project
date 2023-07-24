@@ -163,8 +163,23 @@ async function handleMessage(sender_psid, received_message) {
 }
 
 // Handles messaging_postbacks events
-function handlePostback(sender_psid, received_postback) {
+async function handlePostback(sender_psid, received_postback) {
     console.log("Handle Postback function call");
+    console.log("PSID: ", sender_psid);
+    console.log("Recieved PostBack: ", received_postback);
+    const PAGE_ID = process.env.PAGE_ID;
+    console.log("page_id: ", PAGE_ID)
+    const PAGE_ACCESS_TOKEN = process.env.META_PAGE_ACCESS_TOKEN;
+    console.log("PAGE_ACCESS_TOKEN: ", PAGE_ACCESS_TOKEN);
+    if (received_message.text === 'hi') {
+        try {
+            const response = await axios.post(`https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You Texted ${received_postback.payload}!'}&messaging_type=RESPONSE&access_token=${PAGE_ACCESS_TOKEN}`)
+            // console.log("Response is : ", response)
+            return response;
+        } catch (err) {
+            console.log("Error is : ", err.response.data);
+        }
+    }
 }
 
 // Sends response messages via the Send API
