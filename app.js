@@ -209,7 +209,7 @@ async function handleMessage(sender_psid, received_message) {
         console.log("Response is : ", response)
         return response;
     } catch (err) {
-        console.log("Error is : ", err);
+        console.log("Error is : ", err.response.data);
     }
 }
 
