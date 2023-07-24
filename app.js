@@ -108,7 +108,7 @@ async function handleMessage(sender_psid, received_message) {
     console.log("PAGE_ACCESS_TOKEN: ", PAGE_ACCESS_TOKEN);
     if (recieved_message === 'hi') {
         try {
-            const response = await axios.post(`https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You Texted ${recieved_message}!'}&messaging_type=RESPONSE&access_token=${PAGE_ACCESS_TOKEN}`)
+            const response = await axios.post(`https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You Texted ${received_message.text}!'}&messaging_type=RESPONSE&access_token=${PAGE_ACCESS_TOKEN}`)
             // console.log("Response is : ", response)
             return response;
         } catch (err) {
