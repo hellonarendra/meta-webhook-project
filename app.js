@@ -138,7 +138,7 @@ async function handleMessage(sender_psid, received_message) {
                                 {
                                     "type": "postback",
                                     "title": "Postback Button",
-                                    "payload":{ text:"DEVELOPER_DEFINED_PAYLOAD"}
+                                    "payload": "DEVELOPER_DEFINED_PAYLOAD"
                                 },
                                 {
                                     "type": "web_url",
