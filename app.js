@@ -191,12 +191,13 @@ app.post('/webhook', (req, res) => {
 // }
 
 function handleMessage(sender_psid, received_message) {
+    console.log("PSID: ", sender_psid);
+    console.log("Recieved message: ", received_message);
     console.log("Handle Message function call");
     const PAGE_ID = process.env.PAGE_ID;
     console.log("page_id: ", PAGE_ID)
     const PAGE_ACCESS_TOKEN = process.env.META_PAGE_ACCESS_TOKEN;
     console.log("PAGE_ACCESS_TOKEN: ", PAGE_ACCESS_TOKEN);
-    console.log("PSID: ", sender_psid);
     // PSID=6348126255224814
     // axios({
     //     method: "POST",
