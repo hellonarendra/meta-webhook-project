@@ -100,13 +100,13 @@ app.post('/webhook', (req, res) => {
 
 async function handleMessage(sender_psid, received_message) {
     console.log("PSID: ", sender_psid);
-    console.log("Recieved message: ", received_message);
+    console.log("Recieved message: ", received_message.text);
     console.log("Handle Message function call");
     const PAGE_ID = process.env.PAGE_ID;
     console.log("page_id: ", PAGE_ID)
     const PAGE_ACCESS_TOKEN = process.env.META_PAGE_ACCESS_TOKEN;
     console.log("PAGE_ACCESS_TOKEN: ", PAGE_ACCESS_TOKEN);
-    if (recieved_message === 'hi') {
+    if (recieved_message.text === 'hi') {
         try {
             const response = await axios.post(`https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You Texted ${received_message.text}!'}&messaging_type=RESPONSE&access_token=${PAGE_ACCESS_TOKEN}`)
             // console.log("Response is : ", response)
