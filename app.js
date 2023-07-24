@@ -165,7 +165,7 @@ function handlePostback(senderPsid, receivedPostback) {
 function callSendAPI(senderPsid, response) {
 
     // The page access token we have generated in your app settings
-    const PAGE_ACCESS_TOKEN = process.env.SHOPPING_PAGE_ACCESS_TOKEN;
+    const PAGE_ACCESS_TOKEN = process.env.META_PAGE_ACCESS_TOKEN;
 
     // Construct the message body
     let requestBody = {
@@ -193,7 +193,7 @@ function callSendAPI(senderPsid, response) {
 function handleMessage(sender_psid, received_message) {
     console.log("Handle Message function call");
     const PAGE_ID = process.env.PAGE_ID;
-    const PAGE_ACCESS_TOKEN = process.env.SHOPPING_PAGE_ACCESS_TOKEN;
+    const PAGE_ACCESS_TOKEN = process.env.META_PAGE_ACCESS_TOKEN;
     // PSID=6348126255224814
     // axios({
     //     method: "POST",
