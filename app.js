@@ -100,7 +100,7 @@ app.post('/webhook', (req, res) => {
 
 async function handleMessage(sender_psid, received_message) {
     console.log("PSID: ", sender_psid);
-    console.log("Recieved message: ", received_message.text);
+    console.log("Recieved message: ", received_message);
     console.log("Handle Message function call");
     const PAGE_ID = process.env.PAGE_ID;
     console.log("page_id: ", PAGE_ID)
