@@ -126,7 +126,7 @@ async function handleMessage(sender_psid, received_message) {
         try {
             const response = await axios.post(`https://graph.facebook.com/v17.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
                 "recipient": {
-                    "id": "6348126255224814"
+                    "id": "6348126255224814" // PSID
                 },
                 "message": {
                     "attachment": {
