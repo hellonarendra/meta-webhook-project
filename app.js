@@ -192,10 +192,14 @@ function callSendAPI(senderPsid, response) {
 
 function handleMessage(sender_psid, received_message) {
     console.log("Handle Message function call");
-    axios({
-        method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-        url: `https://graph.facebook.com/v17.0/${process.env.PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${process.env.PAGE_ACCESS_TOKEN}`,
-    });
+    const PAGE_ID = process.env.PAGE_ID;
+    const PAGE_ACCESS_TOKEN = process.env.SHOPPING_PAGE_ACCESS_TOKEN;
+    // PSID=6348126255224814
+    // axios({
+    //     method: "POST",
+    //     url: `https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${process.env.PAGE_ACCESS_TOKEN}`,
+    // });
+    axios.post(`https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${PAGE_ACCESS_TOKEN}`);
 }
 
 // Handles messaging_postbacks events
