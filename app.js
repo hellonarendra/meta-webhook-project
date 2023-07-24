@@ -89,7 +89,6 @@ app.post('/webhook', (req, res) => {
         }
         );
 
-
         // Returns a '200 OK' response to all requests
         res.status(200).send('EVENT_RECEIVED');
     } else {
@@ -99,98 +98,6 @@ app.post('/webhook', (req, res) => {
     }
 });
 
-// Handles messages events
-// function handleMessage(senderPsid, receivedMessage) {
-//     let response;
-
-//     // Checks if the message contains text
-//     if (receivedMessage.text) {
-//         // Create the payload for a basic text message, which
-//         // will be added to the body of your request to the Send API
-//         response = {
-//             'text': `You sent the message: '${receivedMessage.text}'. Now send me an attachment!`
-//         };
-//     } else if (receivedMessage.attachments) {
-
-//         // Get the URL of the message attachment
-//         let attachmentUrl = receivedMessage.attachments[0].payload.url;
-//         response = {
-//             'attachment': {
-//                 'type': 'template',
-//                 'payload': {
-//                     'template_type': 'generic',
-//                     'elements': [{
-//                         'title': 'Is this the right picture?',
-//                         'subtitle': 'Tap a button to answer.',
-//                         'image_url': attachmentUrl,
-//                         'buttons': [
-//                             {
-//                                 'type': 'postback',
-//                                 'title': 'Yes!',
-//                                 'payload': 'yes',
-//                             },
-//                             {
-//                                 'type': 'postback',
-//                                 'title': 'No!',
-//                                 'payload': 'no',
-//                             }
-//                         ],
-//                     }]
-//                 }
-//             }
-//         };
-//     }
-
-//     // Send the response message
-//     callSendAPI(senderPsid, response);
-// }
-
-// Handles messaging_postbacks events
-// function handlePostback(senderPsid, receivedPostback) {
-//     let response;
-
-//     // Get the payload for the postback
-//     let payload = receivedPostback.payload;
-
-//     // Set the response based on the postback payload
-//     if (payload === 'yes') {
-//         response = { 'text': 'Thanks!' };
-//     } else if (payload === 'no') {
-//         response = { 'text': 'Oops, try sending another image.' };
-//     }
-//     // Send the message to acknowledge the postback
-//     callSendAPI(senderPsid, response);
-// }
-
-// Sends response messages via the Send API
-// function callSendAPI(senderPsid, response) {
-
-//     // The page access token we have generated in your app settings
-//     const PAGE_ACCESS_TOKEN = process.env.META_PAGE_ACCESS_TOKEN;
-
-//     // Construct the message body
-//     let requestBody = {
-//         'recipient': {
-//             'id': senderPsid
-//         },
-//         'message': response
-//     };
-
-//     // Send the HTTP request to the Messenger Platform
-//     request({
-//         'uri': 'https://graph.facebook.com/v2.6/me/messages',
-//         'qs': { 'access_token': PAGE_ACCESS_TOKEN },
-//         'method': 'POST',
-//         'json': requestBody
-//     }, (err, _res, _body) => {
-//         if (!err) {
-//             console.log('Message sent!');
-//         } else {
-//             console.error('Unable to send message:' + err);
-//         }
-//     });
-// }
-
 async function handleMessage(sender_psid, received_message) {
     console.log("PSID: ", sender_psid);
     console.log("Recieved message: ", received_message);
@@ -199,17 +106,59 @@ async function handleMessage(sender_psid, received_message) {
     console.log("page_id: ", PAGE_ID)
     const PAGE_ACCESS_TOKEN = process.env.META_PAGE_ACCESS_TOKEN;
     console.log("PAGE_ACCESS_TOKEN: ", PAGE_ACCESS_TOKEN);
-    // PSID=6348126255224814
-    // axios({
-    //     method: "POST",
-    //     url: `https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${process.env.PAGE_ACCESS_TOKEN}`,
-    // });
-    try {
-        const response = await axios.post(`https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${PAGE_ACCESS_TOKEN}`)
-        console.log("Response is : ", response)
-        return response;
-    } catch (err) {
-        console.log("Error is : ", err.response.data);
+    if (recieved_message === 'hi') {
+        try {
+            const response = await axios.post(`https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You Texted ${recieved_message}!'}&messaging_type=RESPONSE&access_token=${PAGE_ACCESS_TOKEN}`)
+            // console.log("Response is : ", response)
+            return response;
+        } catch (err) {
+            console.log("Error is : ", err.response.data);
+        }
+    }
+    else {
+        // try {
+        //     const response = await axios.post(`https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${PAGE_ACCESS_TOKEN}`)
+        //     // console.log("Response is : ", response)
+        //     return response;
+        // } catch (err) {
+        //     console.log("Error is : ", err.response.data);
+        // }
+        try {
+            const response = await axios.post(`https://graph.facebook.com/v17.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
+                "recipient": {
+                    "id": "6348126255224814"
+                },
+                "message": {
+                    "attachment": {
+                        "type": "template",
+                        "payload": {
+                            "template_type": "button",
+                            "text": "What do you want to do next?",
+                            "buttons": [
+                                {
+                                    "type": "postback",
+                                    "title": "Postback Button",
+                                    "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                                },
+                                {
+                                    "type": "web_url",
+                                    "url": "https://www.messenger.com",
+                                    "title": "Visit Messenger"
+                                },
+                                {
+                                    "type": "web_url",
+                                    "url": "https://www.google.com/",
+                                    "title": "Visit Google"
+                                }
+                            ]
+                        }
+                    }
+                }
+            })
+            return response;
+        } catch (err) {
+            console.log("Error is : ", err.response.data);
+        }
     }
 }
 
