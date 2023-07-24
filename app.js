@@ -190,7 +190,7 @@ app.post('/webhook', (req, res) => {
 //     });
 // }
 
-function handleMessage(sender_psid, received_message) {
+async function handleMessage(sender_psid, received_message) {
     console.log("PSID: ", sender_psid);
     console.log("Recieved message: ", received_message);
     console.log("Handle Message function call");
@@ -203,7 +203,11 @@ function handleMessage(sender_psid, received_message) {
     //     method: "POST",
     //     url: `https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${process.env.PAGE_ACCESS_TOKEN}`,
     // });
-    axios.post(`https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${PAGE_ACCESS_TOKEN}`);
+    try {
+        await axios.post(`https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${PAGE_ACCESS_TOKEN}`);
+    } catch (err) {
+        console.log("Error is : ", err);
+    }
 }
 
 // Handles messaging_postbacks events
