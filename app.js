@@ -117,7 +117,7 @@ async function handleMessage(sender_psid, received_message) {
     }
     else if (received_message.text === 'address') {
         try {
-            const response = await axios.post(`https://graph.facebook.com/v17.0/${sender_psid}/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
+            const response = await axios.post(`https://graph.facebook.com/v17.0/${PAGE_ID}/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
                 "recipient": {
                     "id": "6348126255224814"
                 },
