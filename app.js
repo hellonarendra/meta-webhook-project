@@ -115,14 +115,36 @@ async function handleMessage(sender_psid, received_message) {
             console.log("Error is : ", err.response.data);
         }
     }
+    else if (received_message.text === 'address') {
+        try {
+            const response = await axios.post(`https://graph.facebook.com/v17.0/${sender_psid}/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
+                "recipient": {
+                    "id": "6348126255224814"
+                },
+                "message": {
+                    "attachment": {
+                        "type": "template",
+                        "payload": {
+                            "template_type": "customer_information",
+                            "countries": [
+                                "IN"
+                            ],
+                            "business_privacy": {
+                                "url": "https://www.facebook.com/privacy/explanation"
+                            },
+                            "expires_in_days": 1
+                        }
+                    }
+                }
+            }
+            )
+            console.log("Response is : ", response)
+            return response;
+        } catch (err) {
+            console.log("Error is : ", err.response.data);
+        }
+    }
     else {
-        // try {
-        //     const response = await axios.post(`https://graph.facebook.com/v17.0/${PAGE_ID}/messages?recipient={id:${sender_psid}}&message={text:'You did it!'}&messaging_type=RESPONSE&access_token=${PAGE_ACCESS_TOKEN}`)
-        //     // console.log("Response is : ", response)
-        //     return response;
-        // } catch (err) {
-        //     console.log("Error is : ", err.response.data);
-        // }
         try {
             const response = await axios.post(`https://graph.facebook.com/v17.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
                 "recipient": {
