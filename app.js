@@ -8,10 +8,11 @@ const axios = require('axios');
 'use strict';
 
 require('dotenv').config();     // Use dotenv to read .env vars into Node
-
+// const path = require('path');
+// const routes = require(path.join(__dirname, 'src/routes/route'))
 // Imports dependencies and set up http server
 const
-request = require('request'),
+    request = require('request'),
     express = require('express'),
     { urlencoded, json } = require('body-parser'),
     app = express();
@@ -48,13 +49,16 @@ app.get('/webhook', (req, res) => {
 // Creates the endpoint for your webhook
 app.post('/webhook', (req, res) => {
     // let senderPsid;
+
+    console.log("Req from the post method:", req);
     console.log("webhook post API call:");
     let body = req.body;
+
     console.log("body from post API call: ", body);
     // Checks if this is an event from a page subscription
     if (body.object === 'page') {
         // Iterates over each entry - there may be multiple if batched
-        body.entry.forEach(function (entry) {            
+        body.entry.forEach(function (entry) {
             let webhookEvent = entry.messaging[0];          // Gets the body of the webhook event
             console.log(webhookEvent);
             let senderPsid = webhookEvent.sender.id;        // Get the sender PSID
