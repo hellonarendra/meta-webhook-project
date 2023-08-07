@@ -53,13 +53,15 @@ app.post('/webhook', (req, res) => {
     console.log("Req from the post method:", req);
     console.log("webhook post API call:");
 
-    console.log("Request from the post method of webhook:", req);
-    
+    // console.log("Request from the post method of webhook:", req);
+
     let body = req.body;
 
     console.log("body from post API call: ", body);
 
-    console.log("Headers from Req:", req.headers["x-hub-signature-256"]);
+    // console.log("Headers from Req:", req.headers["x-hub-signature-256"]);
+    console.log("Header from post method:", req.headers);
+
     // Checks if this is an event from a page subscription
     if (body.object === 'page') {
         // Iterates over each entry - there may be multiple if batched
