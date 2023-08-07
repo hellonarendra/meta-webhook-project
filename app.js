@@ -57,7 +57,7 @@ app.post('/webhook', (req, res) => {
 
     let body = req.body;
 
-    console.log("body from post API call: ", body);
+    console.log("body from post API call: ", JSON.stringify(body));
 
     // console.log("Headers from Req:", req.headers["x-hub-signature-256"]);
     console.log("Header from post method:", req.headers);
