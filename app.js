@@ -52,6 +52,9 @@ app.post('/webhook', (req, res) => {
 
     console.log("Req from the post method:", req);
     console.log("webhook post API call:");
+
+    console.log("Request from the post method of webhook:", req);
+    
     let body = req.body;
 
     console.log("body from post API call: ", body);
