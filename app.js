@@ -55,6 +55,8 @@ app.post('/webhook', (req, res) => {
     let body = req.body;
 
     console.log("body from post API call: ", body);
+
+    console.log('Headers from Req:", req.headers["x-hub-signature-256"]');
     // Checks if this is an event from a page subscription
     if (body.object === 'page') {
         // Iterates over each entry - there may be multiple if batched
